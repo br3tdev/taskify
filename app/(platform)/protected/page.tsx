@@ -1,11 +1,13 @@
-import * as React from "react";
+"use client";
+
+import { UserButton } from "@clerk/nextjs";
 
 export interface IProtectedPageProps {}
 
-export default function ProtectedPage(props: IProtectedPageProps) {
+export default async function ProtectedPage(props: IProtectedPageProps) {
   return (
     <div>
-      <h1>This page is Protected!</h1>
+      <UserButton afterSignOutUrl="/" />
     </div>
   );
 }
