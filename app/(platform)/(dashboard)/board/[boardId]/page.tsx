@@ -1,6 +1,10 @@
-export interface IBoardIdPageProps {}
+export interface IBoardIdPageProps {
+  params: {
+    boardId: string;
+  };
+}
 
-export default function BoardIdPage(props: IBoardIdPageProps) {
+export default function BoardIdPage({ params }: IBoardIdPageProps) {
   return (
     <div>
       <h1>Board</h1>
