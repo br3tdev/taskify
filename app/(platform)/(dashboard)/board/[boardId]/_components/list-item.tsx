@@ -2,6 +2,10 @@
 
 import { ListWithCards } from "@/types";
 import ListHeader from "./list-header";
+import { ElementRef, useRef, useState } from "react";
+import { CardForm } from "./card-form";
+import { cn } from "@/lib/utils";
+import CardItem from "./card-item";
 
 export interface IListItemProps {
   index: number;
@@ -9,10 +13,43 @@ export interface IListItemProps {
 }
 
 export default function ListItem({ index, data }: IListItemProps) {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const textareaRef = useRef<ElementRef<"textarea">>(null);
+
+  const disabledEditing = () => {
+    setIsEditing(false);
+  };
+
+  const enabledEditing = () => {
+    setIsEditing(true);
+    setTimeout(() => {
+      textareaRef.current?.focus();
+    });
+  };
+
   return (
     <li className="h-full w-[272px] shrink-0 select-none">
       <div className="w-full rounded-md bg-[#f1f2f4] pb-2 shadow-md">
-        <ListHeader data={data} />
+        <ListHeader onAddCard={enabledEditing} data={data} />
+
+        <ol
+          className={cn(
+            "mx-1 flex flex-col gap-y-2 px-1 py-1.5",
+            data.cards.length > 0 ? "mt-2" : "mt-0",
+          )}
+        >
+          {data.cards.map((card, index) => (
+            <CardItem index={index} key={card.id} data={card} />
+          ))}
+        </ol>
+        <CardForm
+          ref={textareaRef}
+          listId={data.id}
+          isEditing={isEditing}
+          enabledEditing={enabledEditing}
+          disabledEditing={disabledEditing}
+        />
       </div>
     </li>
   );
