@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import CardModal from "../modals/card-modal";
+import CardModal from "@/components/modals/card-modal";
+import ProModal from "@/components/modals/pro-modal";
 
 export interface IModalProviderProps {}
 
@@ -17,6 +18,7 @@ export default function ModalProvider(props: IModalProviderProps) {
   return (
     <>
       <CardModal />
+      <ProModal />
     </>
   );
 }
